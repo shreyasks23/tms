@@ -12,7 +12,7 @@ function App() {
   const [questions, setQuestions] = useState<Question[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/quiz/questions")
+    fetch("http://localhost:3000/api/quiz/questions")
       .then((res) => res.json())
       .then(setQuestions)
       .catch((err) => console.error("Failed to fetch questions", err));

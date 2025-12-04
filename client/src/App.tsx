@@ -1,15 +1,10 @@
 import { useEffect, useState } from "react";
 import { Container, Typography, Box } from "@mui/material";
-
-interface Question {
-  _id: string;
-  text: string;
-  options: string[];
-  correctIndex: number;
-}
+import { QnA } from "./pages/QnA";
+import type { IQuestion } from "./models/Question";
 
 function App() {
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [questions, setQuestions] = useState<IQuestion[]>([]);
 
   useEffect(() => {
     fetch("http://localhost:3000/api/quiz/questions")
@@ -27,6 +22,7 @@ function App() {
         <Typography variant="body1">
           Questions loaded: {questions.length}
         </Typography>
+        <QnA questions={questions} />
       </Box>
     </Container>
   );

@@ -2,26 +2,41 @@
   {
     "text": "What is the capital of France?",
     "options": ["London", "Berlin", "Paris", "Madrid"],
-    "correctIndex": 2
+    "correctIndex": 2,
+    "description": "Paris is the capital and largest city of France."
   },
   {
     "text": "Which planet is known as the Red Planet?",
     "options": ["Venus", "Mars", "Jupiter", "Saturn"],
-    "correctIndex": 1
+    "correctIndex": 1,
+    "description": "Mars is called the Red Planet because its surface is rich in iron oxide (rust), giving it a reddish appearance."
   },
   {
     "text": "What is the largest ocean on Earth?",
-    "options": ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
-    "correctIndex": 3
+    "options": [
+      "Atlantic Ocean",
+      "Indian Ocean",
+      "Arctic Ocean",
+      "Pacific Ocean"
+    ],
+    "correctIndex": 3,
+    "description": "The Pacific Ocean is the largest and deepest ocean on Earth by area and volume."
   },
   {
     "text": "Who wrote 'Romeo and Juliet'?",
-    "options": ["Jane Austen", "William Shakespeare", "Charles Dickens", "Mark Twain"],
-    "correctIndex": 1
+    "options": [
+      "Jane Austen",
+      "William Shakespeare",
+      "Charles Dickens",
+      "Mark Twain"
+    ],
+    "correctIndex": 1,
+    "description": "William Shakespeare is the author of the tragedy 'Romeo and Juliet'."
   },
   {
     "text": "What is the chemical symbol for Gold?",
     "options": ["Go", "Gd", "Au", "Ag"],
-    "correctIndex": 2
+    "correctIndex": 2,
+    "description": "Au is the chemical symbol for gold, derived from the Latin word 'Aurum'."
   }
 ]

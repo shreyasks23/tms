@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { connectDB } from "./config/db";
+import { seedQuestions } from "./config/seedQuestions";
 import quizRoutes from "./routes/quizRoutes";
 
 dotenv.config();
@@ -19,6 +20,7 @@ app.get("/", (_req, res) => {
 });
 
 connectDB().then(() => {
+  seedQuestions();
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
   });

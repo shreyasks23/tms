@@ -1,0 +1,27 @@
+[
+  {
+    "text": "What is the capital of France?",
+    "options": ["London", "Berlin", "Paris", "Madrid"],
+    "correctIndex": 2
+  },
+  {
+    "text": "Which planet is known as the Red Planet?",
+    "options": ["Venus", "Mars", "Jupiter", "Saturn"],
+    "correctIndex": 1
+  },
+  {
+    "text": "What is the largest ocean on Earth?",
+    "options": ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+    "correctIndex": 3
+  },
+  {
+    "text": "Who wrote 'Romeo and Juliet'?",
+    "options": ["Jane Austen", "William Shakespeare", "Charles Dickens", "Mark Twain"],
+    "correctIndex": 1
+  },
+  {
+    "text": "What is the chemical symbol for Gold?",
+    "options": ["Go", "Gd", "Au", "Ag"],
+    "correctIndex": 2
+  }
+]

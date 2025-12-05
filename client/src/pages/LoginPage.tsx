@@ -11,7 +11,7 @@ export const LoginPage = () => {
   const loginHandler = () => {
     authContext.setLoggedIn(true);
     authContext.setLoggedInUser(loggedInUser);
-    navigate("/dashboard");
+    navigate("/home/dashboard");
   };
   return (
     <>
@@ -20,6 +20,7 @@ export const LoginPage = () => {
       </header>
       <h3>Login Page</h3>
       <TextField
+        id="login"
         label="Username"
         variant="outlined"
         onChange={(event) => setLoggedInUser(event.target.value)}

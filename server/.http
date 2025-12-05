@@ -7,3 +7,14 @@ content-type: application/json
 
 ###
 GET https://api.restful-api.dev/objects
+
+###
+POST http://localhost:3000/api/quiz/question
+content-type: application/json
+
+{
+  "text": "What is the capital of India?",
+  "options": ["Berlin", "Madrid", "Delhi", "Rome"],
+  "correctIndex": 2,
+  "description": "Delhi is the capital and most populous city of India."
+}

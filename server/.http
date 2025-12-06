@@ -14,7 +14,6 @@ content-type: application/json
 
 {
   "text": "What is the capital of India?",
-  "options": ["Berlin", "Madrid", "Delhi", "Rome"],
-  "correctIndex": 2,
+  "options": [{"text": "Berlin", "isCorrect": false, "id": 1}, {"text": "Madrid", "isCorrect": false, "id": 2}, {"text": "Delhi", "isCorrect": true, "id": 3}, {"text": "Rome", "isCorrect": false, "id": 4}],
   "description": "Delhi is the capital and most populous city of India."
 }

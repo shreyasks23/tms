@@ -1,13 +1,12 @@
 export interface IQuestion {
-  _id: string;
+  _id?: string;
   text: string;
   options: IOption[];
-  correctIndex: number;
   description?: string;
 }
 
 export interface IOption {
-  id: string;
+  _id?: string;
   text: string;
   isCorrect: boolean;
 }

@@ -21,21 +21,14 @@ export const Question = (props: IQuestion) => {
   const handleAnswerSelection = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    if (props.correctIndex === parseInt(event.target.value)) {
-      setIsCorrectAns(true);
-    } else {
-      setIsCorrectAns(false);
-    }
+    setShowAnswer(false);
+    const isCorrect =
+      props.options.find((opt) => opt._id?.toString() === event.target.value)
+        ?.isCorrect || false;
+
+    setIsCorrectAns(isCorrect);
   };
 
-  const handleShowAnswer = () => {
-    setShowAnswer(() => {
-      if (isCorrectAns) {
-        return true;
-      }
-      return false;
-    });
-  };
   return (
     <div id="question-card">
       <Card sx={{ minWidth: 800 }} variant="outlined" ref={ref}>
@@ -48,9 +41,9 @@ export const Question = (props: IQuestion) => {
               {props.options.map((opt, index) => {
                 return (
                   <FormControlLabel
-                    value={index}
+                    value={opt._id}
                     control={<Radio />}
-                    label={opt}
+                    label={opt.text}
                     key={index}
                   />
                 );
@@ -64,7 +57,7 @@ export const Question = (props: IQuestion) => {
           )}
         </CardContent>
         <CardActions>
-          <Button size="small" onClick={handleShowAnswer}>
+          <Button size="small" onClick={() => setShowAnswer(true)}>
             Check answer
           </Button>
         </CardActions>

@@ -2,16 +2,20 @@ import { useState, useEffect } from "react";
 import { Question } from "../components/Question";
 import type { IQuestion } from "../models/Question";
 import { Typography } from "@mui/material";
+import { getQuestions } from "../services/questionService";
 
 export const QnAPage = () => {
 
     const [questions, setQuestions] = useState<IQuestion[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/quiz/questions")
-      .then((res) => res.json())
-      .then(setQuestions)
-      .catch((err) => console.error("Failed to fetch questions", err));
+    getQuestions()
+      .then((res) => {
+        setQuestions(res.data);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch questions", err);
+      });
   }, []);
 
   return (

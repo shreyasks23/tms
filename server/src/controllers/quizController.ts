@@ -11,7 +11,7 @@ export const getQuestions = async (_req: Request, res: Response) => {
 };
 
 export const setQuestion = async (_req: Request, res: Response) => {
-  const question = _req.body as IQuestion;
+  const question = _req.body.question as IQuestion;
   try {
     const questionAdded = await Question.insertOne(question);
     res.json(questionAdded);

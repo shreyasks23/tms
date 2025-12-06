@@ -1,11 +1,11 @@
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { DashboardPage } from "./pages/DashboardPage";
-import { Container, Box } from "@mui/material";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 import { LoginPage } from "./pages/LoginPage";
 import { QnAPage } from "./pages/QnAPage";
 import { HomePage } from "./pages/HomePage";
+import { AddQuestionPage } from "./pages/AddQuestionPage";
 
 const theme = createTheme({
   palette: {
@@ -30,17 +30,15 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container fixed>
-        <Box mt={4}>
-          <Routes>
-            <Route path="/home" element={<HomePage />}>
-              <Route path="dashboard" element={<DashboardPage />} />
-              <Route path="test" element={<QnAPage />} />
-            </Route>
-            <Route path="/" element={<LoginPage />} />
-          </Routes>
-        </Box>
-      </Container>
+      <Outlet />
+      <Routes>
+        <Route path="/home" element={<HomePage />}>
+          <Route path="dashboard" element={<DashboardPage />} />
+          <Route path="test" element={<QnAPage />} />
+          <Route path="add-question" element={<AddQuestionPage />} />
+        </Route>
+        <Route path="/" element={<LoginPage />} />
+      </Routes>
     </ThemeProvider>
   );
 }

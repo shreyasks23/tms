@@ -1,9 +1,15 @@
 export interface IQuestion {
   _id: string;
   text: string;
-  options: string[];
+  options: IOption[];
   correctIndex: number;
   description?: string;
+}
+
+export interface IOption {
+  id: string;
+  text: string;
+  isCorrect: boolean;
 }
 
 export interface IAnswer {

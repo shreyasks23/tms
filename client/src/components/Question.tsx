@@ -14,31 +14,43 @@ import type { IQuestion } from "../models/Question";
 import { useState, useRef } from "react";
 import "./question.css";
 
-export const Question = (props: IQuestion) => {
+interface QuestionProps {
+  question: IQuestion;
+  showAnswer: boolean;
+  onAnswerSelected: (isCorrect: boolean, questionId: string) => void;
+}
+
+export const Question = (props: QuestionProps) => {
   const [isCorrectAns, setIsCorrectAns] = useState(false);
-  const [showAnswer, setShowAnswer] = useState(false);
+  const [showAns, setShowAns] = useState(false);
   const ref = useRef(null);
   const handleAnswerSelection = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setShowAnswer(false);
     const isCorrect =
-      props.options.find((opt) => opt._id?.toString() === event.target.value)
-        ?.isCorrect || false;
-
+      props.question.options.find(
+        (opt) => opt._id?.toString() === event.target.value
+      )?.isCorrect || false;
     setIsCorrectAns(isCorrect);
+    props.onAnswerSelected(isCorrect, props.question._id!.toString());
   };
 
+  const showAnsAlert = showAns || props.showAnswer;
+
+  const handleCheckAnswer = () => {
+    setShowAns(true);
+    // props.onAnswerSelected(isCorrectAns, props.question._id!.toString());
+  };
   return (
     <div id="question-card">
       <Card sx={{ minWidth: 800 }} variant="outlined" ref={ref}>
         <CardContent>
           <Typography variant="h4" gutterBottom>
-            {props.text}
+            {props.question.text}
           </Typography>
           <FormControl>
             <RadioGroup onChange={handleAnswerSelection}>
-              {props.options.map((opt, index) => {
+              {props.question.options.map((opt, index) => {
                 return (
                   <FormControlLabel
                     value={opt._id}
@@ -50,14 +62,16 @@ export const Question = (props: IQuestion) => {
               })}
             </RadioGroup>
           </FormControl>
-          {showAnswer && (
+          {showAnsAlert && (
             <Alert severity={isCorrectAns ? "success" : "warning"}>
-              {isCorrectAns ? props.description : "Wrong answer! Try again"}
+              {isCorrectAns
+                ? props.question.description
+                : "Wrong answer! Try again"}
             </Alert>
           )}
         </CardContent>
         <CardActions>
-          <Button size="small" onClick={() => setShowAnswer(true)}>
+          <Button size="small" onClick={handleCheckAnswer}>
             Check answer
           </Button>
         </CardActions>

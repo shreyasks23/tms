@@ -13,8 +13,9 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AdbIcon from "@mui/icons-material/Adb";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { AuthContext } from "../services/AuthContext";
 
 const pages = [
   { name: "Dashboard", path: "dashboard" },
@@ -26,6 +27,7 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 export const HomePage = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const authContext = useContext(AuthContext);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -48,7 +50,6 @@ export const HomePage = () => {
       <AppBar position="fixed">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
             <Typography
               variant="h6"
               noWrap
@@ -64,7 +65,7 @@ export const HomePage = () => {
                 textDecoration: "none",
               }}
             >
-              LOGO
+              {authContext.loggedInUser}
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>

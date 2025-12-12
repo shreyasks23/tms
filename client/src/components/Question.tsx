@@ -10,7 +10,7 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import type { IQuestion } from "../models/Question";
+import type { IQuestion } from "../models/models";
 import { useState, useRef } from "react";
 import "./question.css";
 

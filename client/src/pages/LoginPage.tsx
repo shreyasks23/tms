@@ -9,9 +9,11 @@ export const LoginPage = () => {
   const [loggedInUser, setLoggedInUser] = useState("");
   const authContext = useContext(AuthContext);
   const loginHandler = () => {
-    authContext.setLoggedIn(true);
-    authContext.setLoggedInUser(loggedInUser);
-    navigate("/home/dashboard");
+    if (loggedInUser !== "" && loggedInUser.length > 0) {
+      authContext.setLoggedIn(true);
+      authContext.setLoggedInUser(loggedInUser);
+      navigate("/home/dashboard");
+    }
   };
   return (
     <>

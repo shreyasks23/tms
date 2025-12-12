@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Question } from "../components/Question";
-import type { IQuestion } from "../models/Question";
 import { Box, Button, Modal, Typography } from "@mui/material";
-import { getQuestions } from "../services/questionService";
+import { getQuestions, submitTest } from "../services/questionService";
+import type { ITest, IUserChoice, IQuestion } from "../models/models";
+import { AuthContext } from "../services/AuthContext";
 
 const style = {
   position: "absolute",
@@ -18,11 +19,14 @@ const style = {
 
 export const QnAPage = () => {
   const [questions, setQuestions] = useState<IQuestion[]>([]);
-  const [userChoices, setUserChoices] = useState<{ [key: string]: boolean }[]>(
-    []
-  );
+  const [userChoices, setUserChoices] = useState<IUserChoice[]>([]);
   const [openModal, setOpenModal] = useState(false);
   const [showAns, setShowAns] = useState(false);
+  const authContext = useContext(AuthContext);
+  const [testResult, setTestResult] = useState<ITest>({
+    userName: authContext.loggedInUser,
+    userChoices,
+  } as ITest);
   const handleClose = () => setOpenModal(false);
 
   useEffect(() => {
@@ -35,18 +39,28 @@ export const QnAPage = () => {
       });
   }, []);
 
+  useEffect(() => {
+    if (testResult.userChoices.length > 0) {
+      submitTest(testResult);
+    }
+  }, [testResult]);
+
   const handleSingleAnswer = (isCorrect: boolean, questionId: string) => {
     setUserChoices((prev) => {
-      return { ...prev, [questionId]: isCorrect };
+      return [...prev, { [questionId]: isCorrect }];
     });
     // console.log(userChoices);
-
-    // TODO handle answer update for each question here
-    // backend integration pending
   };
 
   const handleTestSubmit = () => {
-    console.log("Test submitted successfuly", userChoices);
+    // TODO handle answer update for each question here
+    // backend integration pending
+    setTestResult(() => {
+      return {
+        userName: authContext.loggedInUser,
+        userChoices,
+      };
+    });
     setOpenModal(true);
     setShowAns(true);
   };

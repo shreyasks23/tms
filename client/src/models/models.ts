@@ -21,3 +21,12 @@ export interface IQuiz {
     title: string;
     questions: IQuestion[];
 }
+
+export interface IUserChoice { 
+    [key : string] : boolean;
+}
+
+export interface ITest { 
+    userName : string;
+    userChoices : IUserChoice[];
+}

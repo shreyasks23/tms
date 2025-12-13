@@ -10,35 +10,44 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import type { IQuestion } from "../models/Question";
-import { useState, useRef } from "react";
+import type { IQuestion, IUserChoice } from "../models/models";
+import { useState } from "react";
 import "./question.css";
 
-export const Question = (props: IQuestion) => {
+interface QuestionProps {
+  question: IQuestion;
+  showAnswer: boolean;
+  onAnswerSelected: (userChoice: IUserChoice) => void;
+}
+
+export const Question = (props: QuestionProps) => {
   const [isCorrectAns, setIsCorrectAns] = useState(false);
-  const [showAnswer, setShowAnswer] = useState(false);
-  const ref = useRef(null);
+  const [showAns, setShowAns] = useState(false);
   const handleAnswerSelection = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setShowAnswer(false);
-    const isCorrect =
-      props.options.find((opt) => opt._id?.toString() === event.target.value)
-        ?.isCorrect || false;
-
+    const userChoice = props.question.options.find(
+      (opt) => opt._id === event.target.value
+    );
+    const isCorrect = userChoice?.isCorrect || false;
     setIsCorrectAns(isCorrect);
+    props.onAnswerSelected({
+      questionId: props.question._id!,
+      isCorrect,
+      selectedAns: userChoice?.text,
+    });
   };
 
   return (
     <div id="question-card">
-      <Card sx={{ minWidth: 800 }} variant="outlined" ref={ref}>
+      <Card sx={{ minWidth: 800 }} variant="outlined">
         <CardContent>
           <Typography variant="h4" gutterBottom>
-            {props.text}
+            {props.question.text}
           </Typography>
           <FormControl>
             <RadioGroup onChange={handleAnswerSelection}>
-              {props.options.map((opt, index) => {
+              {props.question.options.map((opt, index) => {
                 return (
                   <FormControlLabel
                     value={opt._id}
@@ -50,14 +59,20 @@ export const Question = (props: IQuestion) => {
               })}
             </RadioGroup>
           </FormControl>
-          {showAnswer && (
+          {(showAns || props.showAnswer) && (
             <Alert severity={isCorrectAns ? "success" : "warning"}>
-              {isCorrectAns ? props.description : "Wrong answer! Try again"}
+              {
+                <Typography>
+                  {isCorrectAns
+                    ? props.question.description
+                    : `Wrong! ${props.question.description}`}
+                </Typography>
+              }
             </Alert>
           )}
         </CardContent>
         <CardActions>
-          <Button size="small" onClick={() => setShowAnswer(true)}>
+          <Button size="small" onClick={() => setShowAns((prev) => !prev)}>
             Check answer
           </Button>
         </CardActions>

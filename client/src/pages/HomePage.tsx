@@ -13,19 +13,22 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AdbIcon from "@mui/icons-material/Adb";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { AuthContext } from "../services/AuthContext";
 
 const pages = [
   { name: "Dashboard", path: "dashboard" },
   { name: "Test", path: "test" },
   { name: "Add Questions", path: "add-question" },
 ];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Account", "Dashboard", "Logout"];
 
 export const HomePage = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -42,13 +45,21 @@ export const HomePage = () => {
     setAnchorElUser(null);
   };
 
-  const navigate = useNavigate();
+  const handleMenuAction = (menu: string) => {
+    if (menu === "Logout") {
+      navigate("/");
+      return;
+    }
+    if (menu === "Dashboard") {
+      navigate("dashboard");
+      return;
+    }
+  };
   return (
     <>
       <AppBar position="fixed">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
             <Typography
               variant="h6"
               noWrap
@@ -64,7 +75,7 @@ export const HomePage = () => {
                 textDecoration: "none",
               }}
             >
-              LOGO
+              {authContext.loggedInUser}
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -156,7 +167,13 @@ export const HomePage = () => {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <MenuItem
+                    key={setting}
+                    onClick={() => {
+                      handleCloseUserMenu();
+                      handleMenuAction(setting);
+                    }}
+                  >
                     <Typography sx={{ textAlign: "center" }}>
                       {setting}
                     </Typography>
@@ -168,7 +185,7 @@ export const HomePage = () => {
         </Container>
       </AppBar>
       <Toolbar />
-      <Container sx={{ mt: 4 }}>
+      <Container sx={{ m: 4, p: 4, width: "100%", height: "100%" }}>
         <Outlet />
       </Container>
     </>

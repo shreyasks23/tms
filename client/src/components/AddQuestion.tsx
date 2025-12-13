@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { IOption, IQuestion } from "../models/Question";
+import type { IOption, IQuestion } from "../models/models";
 import {
   Box,
   Typography,

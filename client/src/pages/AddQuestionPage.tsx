@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AddQuestion } from "../components/AddQuestion";
-import type { IQuestion } from "../models/Question";
+import type { IQuestion } from "../models/models";
 import {
   Accordion,
   AccordionSummary,
@@ -14,15 +14,15 @@ import {
   Container,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { getQuestions } from "../services/questionService";
 
 export const AddQuestionPage = () => {
   const [questions, setQuestions] = useState<IQuestion[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/quiz/questions")
-      .then((res) => res.json())
-      .then(setQuestions)
-      .catch((err) => console.error("Failed to fetch questions", err));
+    getQuestions().then((res) => {
+      setQuestions(res.data);
+    });
   }, []);
 
   const updateQuestions = (newQuestion: IQuestion) => {
@@ -32,13 +32,16 @@ export const AddQuestionPage = () => {
     <>
       <Container
         sx={{
-          mt: 4,
-          mb: 4,
-          display: "block",
-          alignItems: "center",
+          display: "flex",
+          justifyContent: "flex-stretch",
+          top: 50,
+          bgcolor: "background.paper",
+          border: "2px solid #000",
+          boxShadow: 24,
+          p: 2,
         }}
       >
-        <Box sx={{ mb: 4, minWidth: 600 }}>
+        <Box sx={{ p: 2, minWidth: 500 }}>
           {questions.map((question) => (
             <Accordion key={question._id}>
               <AccordionSummary
@@ -55,7 +58,7 @@ export const AddQuestionPage = () => {
                       return (
                         <FormControlLabel
                           value={opt._id}
-                          control={<Radio checked={opt.isCorrect} />}
+                          control={<Radio disabled checked={opt.isCorrect} />}
                           label={opt.text}
                           key={index}
                         />
@@ -67,7 +70,9 @@ export const AddQuestionPage = () => {
             </Accordion>
           ))}
         </Box>
-        <AddQuestion addQuestions={updateQuestions} />
+        <Box sx={{ p: 2, minWidth: 300 }}>
+          <AddQuestion addQuestions={updateQuestions} />
+        </Box>
       </Container>
     </>
   );

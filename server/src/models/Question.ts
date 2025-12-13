@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-export interface IOption {
+export interface IOption extends Document {
   id: number;
   text: string;
   isCorrect: boolean;

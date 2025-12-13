@@ -28,6 +28,7 @@ export const HomePage = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -44,7 +45,11 @@ export const HomePage = () => {
     setAnchorElUser(null);
   };
 
-  const navigate = useNavigate();
+  const handleMenuAction = (menu: string) => {
+    if (menu === "Logout") {
+      navigate("/");
+    }
+  };
   return (
     <>
       <AppBar position="fixed">
@@ -157,7 +162,13 @@ export const HomePage = () => {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <MenuItem
+                    key={setting}
+                    onClick={() => {
+                      handleCloseUserMenu();
+                      handleMenuAction(setting);
+                    }}
+                  >
                     <Typography sx={{ textAlign: "center" }}>
                       {setting}
                     </Typography>

@@ -45,11 +45,10 @@ export const QnAPage = () => {
     }
   }, [testResult]);
 
-  const handleSingleAnswer = (isCorrect: boolean, questionId: string) => {
+  const handleSingleAnswer = (userAns: IUserChoice) => {
     setUserChoices((prev) => {
-      return [...prev, { [questionId]: isCorrect }];
+      return [...prev, { ...userAns }];
     });
-    // console.log(userChoices);
   };
 
   const handleTestSubmit = () => {
@@ -66,7 +65,7 @@ export const QnAPage = () => {
   };
   return (
     <>
-      <Box sx={{ m: 4 }}>
+      <Box>
         <Typography variant="body1">
           Questions loaded: {questions.length}
         </Typography>

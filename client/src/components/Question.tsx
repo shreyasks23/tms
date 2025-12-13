@@ -10,40 +10,37 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import type { IQuestion } from "../models/models";
-import { useState, useRef } from "react";
+import type { IQuestion, IUserChoice } from "../models/models";
+import { useState } from "react";
 import "./question.css";
 
 interface QuestionProps {
   question: IQuestion;
   showAnswer: boolean;
-  onAnswerSelected: (isCorrect: boolean, questionId: string) => void;
+  onAnswerSelected: (userChoice: IUserChoice) => void;
 }
 
 export const Question = (props: QuestionProps) => {
   const [isCorrectAns, setIsCorrectAns] = useState(false);
   const [showAns, setShowAns] = useState(false);
-  const ref = useRef(null);
   const handleAnswerSelection = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const isCorrect =
-      props.question.options.find(
-        (opt) => opt._id?.toString() === event.target.value
-      )?.isCorrect || false;
+    const userChoice = props.question.options.find(
+      (opt) => opt._id === event.target.value
+    );
+    const isCorrect = userChoice?.isCorrect || false;
     setIsCorrectAns(isCorrect);
-    props.onAnswerSelected(isCorrect, props.question._id!.toString());
+    props.onAnswerSelected({
+      questionId: props.question._id!,
+      isCorrect,
+      selectedAns: userChoice?.text,
+    });
   };
 
-  const showAnsAlert = showAns || props.showAnswer;
-
-  const handleCheckAnswer = () => {
-    setShowAns(true);
-    // props.onAnswerSelected(isCorrectAns, props.question._id!.toString());
-  };
   return (
     <div id="question-card">
-      <Card sx={{ minWidth: 800 }} variant="outlined" ref={ref}>
+      <Card sx={{ minWidth: 800 }} variant="outlined">
         <CardContent>
           <Typography variant="h4" gutterBottom>
             {props.question.text}
@@ -62,16 +59,20 @@ export const Question = (props: QuestionProps) => {
               })}
             </RadioGroup>
           </FormControl>
-          {showAnsAlert && (
+          {(showAns || props.showAnswer) && (
             <Alert severity={isCorrectAns ? "success" : "warning"}>
-              {isCorrectAns
-                ? props.question.description
-                : "Wrong answer! Try again"}
+              {
+                <Typography>
+                  {isCorrectAns
+                    ? props.question.description
+                    : `Wrong! ${props.question.description}`}
+                </Typography>
+              }
             </Alert>
           )}
         </CardContent>
         <CardActions>
-          <Button size="small" onClick={handleCheckAnswer}>
+          <Button size="small" onClick={() => setShowAns((prev) => !prev)}>
             Check answer
           </Button>
         </CardActions>

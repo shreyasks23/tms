@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AddQuestion } from "../components/AddQuestion";
-import type { IQuestion } from "../models/Question";
+import type { IQuestion } from "../models/models";
 import {
   Accordion,
   AccordionSummary,
@@ -33,11 +33,15 @@ export const AddQuestionPage = () => {
       <Container
         sx={{
           display: "flex",
-          alignItems: "center",
           justifyContent: "flex-stretch",
+          top: 50,
+          bgcolor: "background.paper",
+          border: "2px solid #000",
+          boxShadow: 24,
+          p: 2,
         }}
       >
-        <Box sx={{ p: 2, minWidth: 500, border: "1px dotted gray" }}>
+        <Box sx={{ p: 2, minWidth: 500 }}>
           {questions.map((question) => (
             <Accordion key={question._id}>
               <AccordionSummary

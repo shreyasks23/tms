@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../services/AuthContext";
 import TextField from "@mui/material/TextField";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -30,7 +30,7 @@ export const LoginPage = () => {
   };
   return (
     <>
-      <Box sx={style}>
+      <Container sx={style}>
         <header>
           <h1>Quiz App</h1>
         </header>
@@ -46,7 +46,7 @@ export const LoginPage = () => {
             Login
           </Button>
         </Box>
-      </Box>
+      </Container>
     </>
   );
 };

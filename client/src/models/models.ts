@@ -22,11 +22,14 @@ export interface IQuiz {
     questions: IQuestion[];
 }
 
-export interface IUserChoice { 
-    [key : string] : boolean;
+export interface IUserChoice {
+  questionId: string;
+  isCorrect: boolean;
+  selectedAns?: string;
 }
 
 export interface ITest { 
     userName : string;
     userChoices : IUserChoice[];
+    score? : number;
 }

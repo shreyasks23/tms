@@ -22,7 +22,7 @@ const pages = [
   { name: "Test", path: "test" },
   { name: "Add Questions", path: "add-question" },
 ];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Account", "Dashboard", "Logout"];
 
 export const HomePage = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -48,6 +48,11 @@ export const HomePage = () => {
   const handleMenuAction = (menu: string) => {
     if (menu === "Logout") {
       navigate("/");
+      return;
+    }
+    if (menu === "Dashboard") {
+      navigate("dashboard");
+      return;
     }
   };
   return (
@@ -180,7 +185,7 @@ export const HomePage = () => {
         </Container>
       </AppBar>
       <Toolbar />
-      <Container sx={{ mt: 4 }}>
+      <Container sx={{ m: 4, p: 4, width: "100%", height: "100%" }}>
         <Outlet />
       </Container>
     </>
